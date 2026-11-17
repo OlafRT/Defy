@@ -39,6 +39,7 @@ namespace RetroPlatformer
             Instance = this; timeLeft = startTime;
             Lives = carry ? savedLives : startingLives;
             Score = carry ? savedScore : 0; Coins = carry ? savedCoins : 0; carry = false;
+            Cursor.visible = false;
         }
         void OnDestroy() { if (Instance == this) Instance = null; }
         void Update()
