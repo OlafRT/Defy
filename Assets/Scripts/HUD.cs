@@ -25,7 +25,7 @@ namespace RetroPlatformer
             if (!session) session = FindFirstObjectByType<GameManager>();
             if (!session) return;
 
-            if (scoreText) scoreText.text = $"SCORE\n{session.Score:000000}";
+            if (scoreText) scoreText.text = $"MARIO\n{session.Score:000000}";
             if (coinsLivesText) coinsLivesText.text = $"COINS {session.Coins:00}\nLIVES {session.Lives}";
             if (worldText) worldText.text = $"WORLD\n{session.worldLabel}";
             if (timeText) timeText.text = $"TIME\n{session.TimeLeftRounded:000}";
