@@ -2,19 +2,20 @@ using UnityEngine;
 namespace RetroPlatformer
 {
     // Swept collision, no physical collider: cannot shove Mario, push enemies, or block the player.
-    public sealed class RetroFireball : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroFireball")]
+    public sealed class Fireball : MonoBehaviour
     {
-        RetroPlayer owner; SpriteRenderer visual; Sprite[] flight, explosions;
+        PlayerMovement owner; SpriteRenderer visual; Sprite[] flight, explosions;
         Vector2 velocity; float gravity, bounce, elapsed, burstTime; int direction;
         readonly RaycastHit2D[] hits = new RaycastHit2D[48];
         public bool Finished { get; private set; }
         const float Radius = .17f;
-        public void Initialize(RetroPlayer p, SpriteRenderer sr, Sprite[] f, Sprite[] e, int dir, float speed, float g, float rebound)
+        public void Initialize(PlayerMovement p, SpriteRenderer sr, Sprite[] f, Sprite[] e, int dir, float speed, float g, float rebound)
         { owner=p; visual=sr; flight=f; explosions=e; direction=dir; velocity=new Vector2(dir * speed,-3f); gravity=g; bounce=rebound; }
         void FixedUpdate()
         {
             if (Finished || !owner) return;
-            if (owner.IsDead || (RetroSession.Instance && RetroSession.Instance.Finished)) { Destroy(gameObject); return; }
+            if (owner.IsDead || (GameManager.Instance && GameManager.Instance.Finished)) { Destroy(gameObject); return; }
             float dt=Time.fixedDeltaTime; velocity.y-=gravity*dt; Vector2 delta=velocity*dt;
             Vector2 pos=transform.position;
             var filter=new ContactFilter2D { useTriggers=false };
@@ -23,16 +24,16 @@ namespace RetroPlatformer
             for(int i=0;i<count;i++)
             {
                 var c=hits[i].collider;
-                if(!c || c.GetComponentInParent<RetroPlayer>()) continue;
-                var enemy=c.GetComponentInParent<RetroWalker>();
-                if(enemy && (enemy.kind!=RetroWalker.Kind.Enemy || !enemy.Active)) continue;
+                if(!c || c.GetComponentInParent<PlayerMovement>()) continue;
+                var enemy=c.GetComponentInParent<Walker>();
+                if(enemy && (enemy.kind!=Walker.Kind.Enemy || !enemy.Active)) continue;
                 if(!enemy && (owner.terrainLayers.value & (1<<c.gameObject.layer))==0) continue;
                 if(hits[i].distance<distance){best=i;distance=hits[i].distance;}
             }
             if(best>=0)
             {
                 var hit=hits[best]; transform.position=pos+delta.normalized*Mathf.Max(0,distance-.01f);
-                var w=hit.collider.GetComponentInParent<RetroWalker>();
+                var w=hit.collider.GetComponentInParent<Walker>();
                 if(w) {w.HitByFire(direction); Burst();return;}
                 if(hit.normal.y>.55f && velocity.y<0) {velocity.y=bounce; transform.position+=Vector3.up*.02f;}
                 else { Burst(); return; }

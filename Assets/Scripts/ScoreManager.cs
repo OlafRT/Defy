@@ -4,23 +4,26 @@ using UnityEngine;
 namespace RetroPlatformer
 {
     [DisallowMultipleComponent]
-    public sealed class RetroScorePopups : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroScorePopups")]
+    public sealed class ScoreManager : MonoBehaviour
     {
-        public RetroScorePopup popupPrefab;
-        [Header("Display rules (does not affect scoring)")]
+        [Header("Prefab")]
+        public ScorePopup popupPrefab;
+        [Header("Display Rules")]
         public bool enemyPopups = true;
         public bool powerUpPopups = true;
         public bool blockCoinPopups = true;
         public bool looseCoinPopups = false;
         public bool brickPopups = false;
         public bool flagpolePopups = true;
+        [Header("Coin Popup Animation")]
         [Min(0)] public float blockCoinRiseMultiplier = .5f;
         [Header("Flagpole label position")]
         [Tooltip("Offset in world units. Applied to the visual only.")]
         public Vector3 flagpoleLabelOffset = new Vector3(.4f, 0f, 0f);
-        static RetroScorePopups Current => RetroSession.Instance ? RetroSession.Instance.GetComponent<RetroScorePopups>() : null;
+        static ScoreManager Current => GameManager.Instance ? GameManager.Instance.GetComponent<ScoreManager>() : null;
 
-        public RetroScorePopup Show(string value, Vector3 position, bool automatic = true, Transform parent = null, float riseMultiplier = 1f)
+        public ScorePopup Show(string value, Vector3 position, bool automatic = true, Transform parent = null, float riseMultiplier = 1f)
         {
             if (!popupPrefab) return null;
             var popup = Instantiate(popupPrefab, position, Quaternion.identity);
@@ -39,7 +42,7 @@ namespace RetroPlatformer
         { var m = Current; if (m && m.looseCoinPopups) m.Show("200", pos); }
         public static void Brick(Vector3 pos)
         { var m = Current; if (m && m.brickPopups) m.Show("50", pos); }
-        public static RetroScorePopup Pole(int points, Vector3 pos, Transform parent)
+        public static ScorePopup Pole(int points, Vector3 pos, Transform parent)
         { var m = Current; return m && m.flagpolePopups ? m.Show(points.ToString(), pos, false, parent) : null; }
         public static Vector3 PoleOffset { get { var m = Current; return m ? m.flagpoleLabelOffset : Vector3.zero; } }
         IEnumerator Delayed(string value, Vector3 pos, float delay)

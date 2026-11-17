@@ -4,15 +4,21 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 namespace RetroPlatformer
 {
-    public class RetroSession : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroSession")]
+    public class GameManager : MonoBehaviour
     {
-        public static RetroSession Instance { get; private set; }
+        public static GameManager Instance { get; private set; }
+        [Header("Level Settings")]
         public string worldLabel = "1-1";
-        public int startTime = 400, startingLives = 3;
+        public int startTime = 400;
+        public int startingLives = 3;
         public float timerSpeed = 2.5f;
+        [Header("Debug HUD")]
         public bool showDebugHUD = true;
-        public RetroPlayer player;
+        [Header("Scene References and Transition")]
+        public PlayerMovement player;
         public string nextScene;
+        [Header("Events")]
         public UnityEvent onLevelFinished;
         public int Score { get; private set; }
         public int Coins { get; private set; }
@@ -40,12 +46,12 @@ namespace RetroPlatformer
             if (Finished || Completing || restarting || !player || player.IsDead) return;
             timeLeft = Mathf.Max(0,timeLeft - Time.deltaTime * timerSpeed);
             if (timeLeft <= 0) player.Die();
-            else RetroAudio.CheckTime(timeLeft);
+            else AudioManager.CheckTime(timeLeft);
         }
         public void AddScore(int amount) => Score += amount;
-        public void AddCoin() { RetroAudio.Play(RetroAudio.Cue.Coin); Coins++; AddScore(200); if (Coins >= 100) { Coins -= 100; AddLife(); } }
-        public void AddLife() { Lives++; RetroAudio.Play(RetroAudio.Cue.ExtraLife); }
-        public void RestartAfterDeath() { if (restarting || Finished || Completing) return; restarting = true; Lives--; StartCoroutine(Restart(RetroAudio.Death(Lives <= 0))); }
+        public void AddCoin() { AudioManager.Play(AudioManager.Cue.Coin); Coins++; AddScore(200); if (Coins >= 100) { Coins -= 100; AddLife(); } }
+        public void AddLife() { Lives++; AudioManager.Play(AudioManager.Cue.ExtraLife); }
+        public void RestartAfterDeath() { if (restarting || Finished || Completing) return; restarting = true; Lives--; StartCoroutine(Restart(AudioManager.Death(Lives <= 0))); }
         IEnumerator Restart(float delay)
         {
             yield return new WaitForSecondsRealtime(delay);
@@ -56,7 +62,7 @@ namespace RetroPlatformer
         {
             if (Finished || Completing || restarting || !player || player.IsDead) return false;
             Completing = true; CastleEnding = true; player.ControlEnabled = false;
-            AddScore(points); RetroAudio.BeginPole(); return true;
+            AddScore(points); AudioManager.BeginPole(); return true;
         }
         public int ConsumeGoalTime(int ticks)
         {
@@ -76,7 +82,7 @@ namespace RetroPlatformer
             if (Finished || Completing || restarting) return;
             Finished = true; if (player) player.ControlEnabled = false;
             AddScore(Mathf.CeilToInt(timeLeft)*50);
-            StartCoroutine(Next(RetroAudio.Clear()));
+            StartCoroutine(Next(AudioManager.Clear()));
         }
         IEnumerator Next(float delay)
         {

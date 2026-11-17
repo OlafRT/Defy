@@ -2,17 +2,24 @@ using UnityEngine;
 
 namespace RetroPlatformer
 {
-    // Presentation only: RetroPlayer still owns movement, physics and power state.
+    // Presentation only: PlayerMovement still owns movement, physics and power state.
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(RetroPlayer))]
+    [RequireComponent(typeof(PlayerMovement))]
     [DefaultExecutionOrder(100)]
-    public sealed class RetroMarioAnimation : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroMarioAnimation")]
+    public sealed class MarioAnimation : MonoBehaviour
     {
         [Header("Small Mario")]
-        public Sprite smallIdle, smallJump, smallSkid, smallDeath;
+        public Sprite smallIdle;
+        public Sprite smallJump;
+        public Sprite smallSkid;
+        public Sprite smallDeath;
         public Sprite[] smallWalk = new Sprite[3];
         [Header("Super Mario")]
-        public Sprite bigIdle, bigJump, bigSkid, bigCrouch;
+        public Sprite bigIdle;
+        public Sprite bigJump;
+        public Sprite bigSkid;
+        public Sprite bigCrouch;
         public Sprite[] bigWalk = new Sprite[3];
         [Header("Power-up animation")]
         public Sprite growMiddle;
@@ -25,14 +32,15 @@ namespace RetroPlatformer
         [Min(0f)] public float framesPerUnit = 1.35f;
         [Min(1f)] public float maxWalkFPS = 15f;
         public bool startWithThirdFrame = true;
+        [Header("Sprite Placement")]
         public bool nativePixelSize = true;
         public Vector2 visualOffset;
 
-        RetroPlayer player;
+        PlayerMovement player;
         float walkPhase, changeTimer, changeDuration;
         bool walking, growing;
 
-        void Awake() { player = GetComponent<RetroPlayer>(); }
+        void Awake() { player = GetComponent<PlayerMovement>(); }
         void OnEnable() { player.PowerChanged += OnPowerChanged; walking = false; changeTimer = 0; }
         void OnDisable() { if (player) player.PowerChanged -= OnPowerChanged; }
         void OnPowerChanged(bool big)

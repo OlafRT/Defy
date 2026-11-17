@@ -2,10 +2,14 @@ using UnityEngine;
 
 namespace RetroPlatformer
 {
-    public class RetroSpriteFlipbook : MonoBehaviour
+    [DisallowMultipleComponent]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroSpriteFlipbook")]
+    public class SpriteAnimation : MonoBehaviour
     {
+        [Header("Sprites")]
         public SpriteRenderer target;
         public Sprite[] frames;
+        [Header("Playback")]
         public float framesPerSecond = 8f;
         public bool playOnlyWhenMoving = true;
         public float minSpeed = 0.05f;

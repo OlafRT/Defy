@@ -6,27 +6,47 @@ using UnityEngine.InputSystem;
 namespace RetroPlatformer
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
-    public class RetroPlayer : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroPlayer")]
+    public class PlayerMovement : MonoBehaviour
     {
-        [Header("One Unity unit = one 16px tile")]
-        public float walkSpeed = 5.625f, runSpeed = 9.375f;
-        public float walkAcceleration = 8.35f, runAcceleration = 12.52f, runBrake = 11.43f;
-        public float turnMultiplier = 2f, runReleaseTime = .15f;
-        [Header("Jump: units / second")]
-        public float jumpSpeed = 15f, runningJumpSpeed = 18.75f;
-        public float heldGravity = 28.125f, walkingJumpGravity = 26.37f, runningJumpGravity = 35.16f;
-        public float releasedGravity = 98.44f, walkingFallGravity = 84.375f, runningFallGravity = 126.56f;
-        public float initialFallGravity = 35.16f, maxFallSpeed = 15.9f;
+        [Header("Horizontal Movement")]
+        public float walkSpeed = 5.625f;
+        public float runSpeed = 9.375f;
+        public float walkAcceleration = 8.35f;
+        public float runAcceleration = 12.52f;
+        public float runBrake = 11.43f;
+        public float turnMultiplier = 2f;
+        public float runReleaseTime = .15f;
+        [Header("Jump and Gravity")]
+        public float jumpSpeed = 15f;
+        public float runningJumpSpeed = 18.75f;
+        public float heldGravity = 28.125f;
+        public float walkingJumpGravity = 26.37f;
+        public float runningJumpGravity = 35.16f;
+        public float releasedGravity = 98.44f;
+        public float walkingFallGravity = 84.375f;
+        public float runningFallGravity = 126.56f;
+        public float initialFallGravity = 35.16f;
+        public float maxFallSpeed = 15.9f;
         public float stompBounce = 8.5f;
-        [Header("Optional modern assists (zero = NES style)")]
-        public float coyoteTime = 0f, jumpBuffer = 0f;
-        [Header("Appearance / collision")]
+        [Header("Input Assists")]
+        public float coyoteTime = 0f;
+        public float jumpBuffer = 0f;
+        [Header("Sprites")]
         public SpriteRenderer artwork;
-        public Sprite smallSprite, bigSprite, crouchSprite;
-        public float bodyWidth = .72f, smallHeight = .9f, bigHeight = 1.8f;
+        public Sprite smallSprite;
+        public Sprite bigSprite;
+        public Sprite crouchSprite;
+        [Header("Collision")]
+        public float bodyWidth = .72f;
+        public float smallHeight = .9f;
+        public float bigHeight = 1.8f;
         public LayerMask terrainLayers = ~0;
-        public float invincibilityTime = 2.5f, deathY = -4f;
-        public RetroCamera scrollingCamera;
+        [Header("Damage and Death")]
+        public float invincibilityTime = 2.5f;
+        public float deathY = -4f;
+        [Header("Camera")]
+        public CameraFollow scrollingCamera;
         public bool IsBig { get; private set; }
         public bool IsFire { get; private set; }
         public bool Grounded { get; private set; }
@@ -93,7 +113,7 @@ namespace RetroPlatformer
             if (ControlEnabled && press) { jumpQueued = true; buffer = jumpBuffer; }
             if (artwork) artwork.enabled = invincible <= 0 || Mathf.FloorToInt(invincible * 16) % 2 == 0;
         }
-        bool IsTerrain(Collider2D other) => other && other != box && !other.GetComponentInParent<RetroPlayer>() && !other.GetComponentInParent<RetroWalker>() && !other.isTrigger;
+        bool IsTerrain(Collider2D other) => other && other != box && !other.GetComponentInParent<PlayerMovement>() && !other.GetComponentInParent<Walker>() && !other.isTrigger;
         bool IsOnGround()
         {
             int count = box.Cast(Vector2.down, Filter, hits, .055f);
@@ -124,7 +144,7 @@ namespace RetroPlatformer
             bool jump = ControlEnabled && jumpQueued && (Grounded || coyote > 0);
             if (jump)
             {
-                RetroAudio.Play(IsBig ? RetroAudio.Cue.JumpSuper : RetroAudio.Cue.JumpSmall);
+                AudioManager.Play(IsBig ? AudioManager.Cue.JumpSuper : AudioManager.Cue.JumpSmall);
                 float speed = Mathf.Abs(v.x);
                 bool fast = speed >= 5.86f, walking = speed >= 3.75f;
                 v.y = fast ? runningJumpSpeed : jumpSpeed;
@@ -169,8 +189,8 @@ namespace RetroPlatformer
         void HandleCollision(Collision2D collision)
         {
             if (IsDead) return;
-            var block = collision.collider.GetComponentInParent<RetroBlock>();
-            var walker = collision.collider.GetComponentInParent<RetroWalker>();
+            var block = collision.collider.GetComponentInParent<Block>();
+            var walker = collision.collider.GetComponentInParent<Walker>();
             if (block && preY > 0 && !headConsumed)
             {
                 foreach (var c in collision.contacts)
@@ -179,11 +199,11 @@ namespace RetroPlatformer
             if (!block && !walker && preY > 0 && !headConsumed && IsTerrain(collision.collider))
             {
                 foreach (var c in collision.contacts)
-                    if (c.normal.y < -.5f) { headConsumed = true; RetroAudio.Play(RetroAudio.Cue.Bump); break; }
+                    if (c.normal.y < -.5f) { headConsumed = true; AudioManager.Play(AudioManager.Cue.Bump); break; }
             }
             if (walker && walker.Active)
             {
-                if (walker.kind != RetroWalker.Kind.Enemy) { walker.Collect(this); return; }
+                if (walker.kind != Walker.Kind.Enemy) { walker.Collect(this); return; }
                 bool above = false;
                 foreach (var c in collision.contacts) if (c.normal.y > .45f) above = true;
                 if (above && preY < -.1f && box.bounds.min.y >= walker.transform.position.y - .08f)
@@ -199,7 +219,7 @@ namespace RetroPlatformer
         }
         public void GainFire()
         {
-            if (IsDead || (RetroSession.Instance && RetroSession.Instance.Finished)) return;
+            if (IsDead || (GameManager.Instance && GameManager.Instance.Finished)) return;
             if (!IsBig) { Grow(); return; }
             if (IsFire) return;
             IsFire = true;
@@ -209,24 +229,24 @@ namespace RetroPlatformer
         void OnTriggerStay2D(Collider2D other) => CollectFlower(other);
         void CollectFlower(Collider2D other)
         {
-            var item = other.GetComponentInParent<RetroWalker>();
-            if (item && item.kind == RetroWalker.Kind.Flower) item.Collect(this);
+            var item = other.GetComponentInParent<Walker>();
+            if (item && item.kind == Walker.Kind.Flower) item.Collect(this);
         }
         public void Hurt()
         {
-            if (IsDead || invincible > 0 || fireGrace > 0 || (RetroSession.Instance && RetroSession.Instance.Finished)) return;
-            if (IsBig) { RetroAudio.Play(RetroAudio.Cue.Pipe); IsFire = false; IsBig = false; IsCrouching = false; ApplySize(); invincible = invincibilityTime; PowerChanged?.Invoke(false); }
+            if (IsDead || invincible > 0 || fireGrace > 0 || (GameManager.Instance && GameManager.Instance.Finished)) return;
+            if (IsBig) { AudioManager.Play(AudioManager.Cue.Pipe); IsFire = false; IsBig = false; IsCrouching = false; ApplySize(); invincible = invincibilityTime; PowerChanged?.Invoke(false); }
             else Die();
         }
         public void Die()
         {
-            if (IsDead || (RetroSession.Instance && RetroSession.Instance.Finished)) return;
+            if (IsDead || (GameManager.Instance && GameManager.Instance.Finished)) return;
             IsFire = false; IsDead = true; ControlEnabled = false; box.enabled = false;
             if (artwork) artwork.enabled = true;
             body.gravityScale = 3; body.linearVelocity = new Vector2(0, 10);
             Died?.Invoke();
-            if (RetroSession.Instance) RetroSession.Instance.RestartAfterDeath();
-            else RetroAudio.Death(false);
+            if (GameManager.Instance) GameManager.Instance.RestartAfterDeath();
+            else AudioManager.Death(false);
         }
         void ApplySize()
         {

@@ -1219,7 +1219,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1837210685}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &41483172
 Transform:
@@ -4898,7 +4898,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 741297461}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &181902437
 Transform:
@@ -6041,7 +6041,6 @@ GameObject:
   - component: {fileID: 510554218}
   - component: {fileID: 510554217}
   - component: {fileID: 510554221}
-  - component: {fileID: 510554220}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -11858,7 +11857,6 @@ GameObject:
   - component: {fileID: 1639840134}
   - component: {fileID: 1639840133}
   - component: {fileID: 1639840137}
-  - component: {fileID: 1639840136}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -12555,7 +12553,6 @@ GameObject:
   - component: {fileID: 1388236341}
   - component: {fileID: 1388236340}
   - component: {fileID: 1388236344}
-  - component: {fileID: 1388236343}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -13630,7 +13627,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 850022802}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &491560407
 Transform:
@@ -14450,7 +14447,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 510554220}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &510554216
 Transform:
@@ -14564,25 +14561,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &510554220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205728484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1444205936}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &510554221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21139,7 +21117,6 @@ GameObject:
   - component: {fileID: 741297459}
   - component: {fileID: 741297458}
   - component: {fileID: 741297462}
-  - component: {fileID: 741297461}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -21243,25 +21220,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &741297461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 741297457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1151900861}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &741297462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24987,7 +24945,6 @@ GameObject:
   - component: {fileID: 850022800}
   - component: {fileID: 850022799}
   - component: {fileID: 850022803}
-  - component: {fileID: 850022802}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -25091,25 +25048,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &850022802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850022798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1164399822}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &850022803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26253,7 +26191,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1062255310}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &888825317
 Transform:
@@ -29116,7 +29054,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 972158655}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &972158652
 Transform:
@@ -29207,7 +29145,6 @@ GameObject:
   - component: {fileID: 972158659}
   - component: {fileID: 972158658}
   - component: {fileID: 972158657}
-  - component: {fileID: 972158655}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -29215,25 +29152,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &972158655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972158654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 972158653}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!4 &972158656
 Transform:
   m_ObjectHideFlags: 0
@@ -29430,7 +29348,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1511956714}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &973468359
 Transform:
@@ -32236,7 +32154,6 @@ GameObject:
   - component: {fileID: 1062255308}
   - component: {fileID: 1062255307}
   - component: {fileID: 1062255311}
-  - component: {fileID: 1062255310}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -32340,25 +32257,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1062255310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062255306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 709996912}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1062255311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36446,7 +36344,6 @@ GameObject:
   - component: {fileID: 1972308930}
   - component: {fileID: 1972308929}
   - component: {fileID: 1972308933}
-  - component: {fileID: 1972308932}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -42551,7 +42448,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1388236343}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &1388236339
 Transform:
@@ -42665,25 +42562,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1388236343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454983209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 166370026}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1388236344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45034,7 +44912,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1516912805}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &1479329856
 Transform:
@@ -46207,7 +46085,6 @@ GameObject:
   - component: {fileID: 1511956712}
   - component: {fileID: 1511956711}
   - component: {fileID: 1511956715}
-  - component: {fileID: 1511956714}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -46311,25 +46188,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1511956714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511956710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 202252949}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1511956715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46546,7 +46404,6 @@ GameObject:
   - component: {fileID: 1516912803}
   - component: {fileID: 1516912802}
   - component: {fileID: 1516912806}
-  - component: {fileID: 1516912805}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -46650,25 +46507,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1516912805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516912801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 397568471}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1516912806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49520,7 +49358,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1639840136}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &1639840132
 Transform:
@@ -49634,25 +49472,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1639840136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432568496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1965157384}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1639840137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55142,7 +54961,6 @@ GameObject:
   - component: {fileID: 2063471147}
   - component: {fileID: 2063471146}
   - component: {fileID: 2063471150}
-  - component: {fileID: 2063471149}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -55899,7 +55717,6 @@ GameObject:
   - component: {fileID: 1837210683}
   - component: {fileID: 1837210682}
   - component: {fileID: 1837210686}
-  - component: {fileID: 1837210685}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -56003,25 +55820,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1837210685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837210681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1110904075}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1837210686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57192,7 +56990,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1891692365}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &1870159556
 Transform:
@@ -57982,7 +57780,6 @@ GameObject:
   - component: {fileID: 1891692363}
   - component: {fileID: 1891692362}
   - component: {fileID: 1891692366}
-  - component: {fileID: 1891692365}
   m_Layer: 0
   m_Name: Goomba
   m_TagString: Untagged
@@ -58086,25 +57883,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1891692365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891692361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 1249675816}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1891692366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60812,7 +60590,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1972308932}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &1972308928
 Transform:
@@ -60926,25 +60704,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1972308932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167240465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 626306582}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &1972308933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63842,7 +63601,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8734615998675537432, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2063471149}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eff06eee9cf584748b6b6b99d839879d, type: 3}
 --- !u!4 &2063471145
 Transform:
@@ -63956,25 +63715,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2063471149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810157100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1393ce9d414a86488e28c6b8b2e5ff8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroSpriteFlipbook
-  target: {fileID: 182844191}
-  frames:
-  - {fileID: 21300000, guid: 63a37eb0499072c4b98a38e341aad4b8, type: 3}
-  - {fileID: 21300000, guid: 93546fd6897633d448c98872cf35a9cf, type: 3}
-  framesPerSecond: 8
-  playOnlyWhenMoving: 1
-  minSpeed: 0.05
 --- !u!114 &2063471150
 MonoBehaviour:
   m_ObjectHideFlags: 0

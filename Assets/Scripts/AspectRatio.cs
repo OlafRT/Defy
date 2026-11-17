@@ -4,7 +4,8 @@ namespace RetroPlatformer
 {
     // Keep exactly the same visible world width at 256:240, regardless of window shape.
     [RequireComponent(typeof(Camera)), DisallowMultipleComponent, DefaultExecutionOrder(-500)]
-    public sealed class RetroNESFrame : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroNESFrame")]
+    public sealed class AspectRatio : MonoBehaviour
     {
         public Vector2Int referenceResolution = new Vector2Int(256,240);
         public RectTransform hudArea;

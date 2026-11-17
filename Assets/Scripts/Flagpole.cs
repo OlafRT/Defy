@@ -5,23 +5,43 @@ namespace RetroPlatformer
 {
     // The goal owns the scripted movement. The controller and its visual drivers are
     // temporarily disabled so physics, input and fire palettes cannot fight the cutscene.
-    public class RetroGoal : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroGoal")]
+    public class Flagpole : MonoBehaviour
     {
+        [Header("Events")]
         public UnityEvent onReached;
-        [Header("Scene references")]
-        public Transform poleBottom, poleTop, flag, castleDoor;
-        public Sprite[] smallClimb, bigClimb, fireClimb;
-        [Header("Animation timing")]
-        public float slideSpeed = 6f, slideFPS = 8f, grabOffset = .40f;
-        public float bottomPause = .25f, turnPause = .12f, walkSpeed = 4.2f, walkFPS = 12f;
-        public float descentDuration = .22f, timeTicksPerSecond = 60f, endHold = .35f;
+        [Header("Scene References")]
+        public Transform poleBottom;
+        public Transform poleTop;
+        public Transform flag;
+        public Transform castleDoor;
+
+        [Header("Climbing Sprites")]
+        public Sprite[] smallClimb;
+        public Sprite[] bigClimb;
+        public Sprite[] fireClimb;
+        [Header("Pole Animation")]
+        public float slideSpeed = 6f;
+        public float slideFPS = 8f;
+        public float grabOffset = .40f;
+        public float bottomPause = .25f;
+        public float turnPause = .12f;
+
+        [Header("Castle Walk")]
+        public float walkSpeed = 4.2f;
+        public float walkFPS = 12f;
+        public float descentDuration = .22f;
+
+        [Header("Score and Completion")]
+        public float timeTicksPerSecond = 60f;
+        public float endHold = .35f;
         public bool showPolePoints = true;
         bool used;
         void OnTriggerEnter2D(Collider2D other)
         {
-            var p = other.GetComponentInParent<RetroPlayer>();
+            var p = other.GetComponentInParent<PlayerMovement>();
             if (used || !p || p.IsDead || !p.ControlEnabled) return;
-            var session = RetroSession.Instance;
+            var session = GameManager.Instance;
             if (!session) return;
             if (!poleBottom || !poleTop || !flag || !castleDoor || !p.artwork)
             { used = true; onReached?.Invoke(); session.Finish(); return; }
@@ -30,11 +50,11 @@ namespace RetroPlatformer
             if (!session.BeginGoal(bonus)) return;
             used = true; onReached?.Invoke(); StartCoroutine(Sequence(p, session, bonus));
         }
-        IEnumerator Sequence(RetroPlayer p, RetroSession session, int bonus)
+        IEnumerator Sequence(PlayerMovement p, GameManager session, int bonus)
         {
             var art = p.artwork;
-            var anim = p.GetComponent<RetroMarioAnimation>();
-            var fire = p.GetComponent<RetroFirePower>();
+            var anim = p.GetComponent<MarioAnimation>();
+            var fire = p.GetComponent<FirePower>();
             var rb = p.GetComponent<Rigidbody2D>();
             bool big = p.IsBig, fiery = p.IsFire;
             Sprite idle = anim ? (big ? anim.bigIdle : anim.smallIdle) : (big ? p.bigSprite : p.smallSprite);
@@ -57,23 +77,23 @@ namespace RetroPlatformer
             Vector3 flagStart = flag.position;
             Vector3 flagEnd = new Vector3(flagStart.x, bottom + .50f, flagStart.z);
             float duration = Mathf.Max(.15f, (y-bottom)/Mathf.Max(.01f,slideSpeed), (flagStart.y-flagEnd.y)/Mathf.Max(.01f,slideSpeed));
-            RetroScorePopup points = showPolePoints ? RetroScorePopups.Pole(bonus, new Vector3(x+.35f,bottom+1,z) + RetroScorePopups.PoleOffset, transform) : null;
+            ScorePopup points = showPolePoints ? ScoreManager.Pole(bonus, new Vector3(x+.35f,bottom+1,z) + ScoreManager.PoleOffset, transform) : null;
             for (float t = 0; t < duration; t += Time.deltaTime)
             {
                 float f = Mathf.Clamp01(t/duration);
                 p.transform.position = new Vector3(x-grabOffset,Mathf.Lerp(y,bottom,f),z);
                 flag.position = Vector3.Lerp(flagStart,flagEnd,f);
                 Pose(art, Frame(climb,t*slideFPS,idle),false,offset);
-                if (points) points.transform.position = new Vector3(x+.35f,Mathf.Lerp(bottom+1,poleTop.position.y-.7f,f),z) + RetroScorePopups.PoleOffset;
+                if (points) points.transform.position = new Vector3(x+.35f,Mathf.Lerp(bottom+1,poleTop.position.y-.7f,f),z) + ScoreManager.PoleOffset;
                 yield return null;
             }
             p.transform.position = new Vector3(x-grabOffset,bottom,z); flag.position = flagEnd;
-            if (points) points.transform.position = new Vector3(x+.35f,poleTop.position.y-.7f,z) + RetroScorePopups.PoleOffset;
+            if (points) points.transform.position = new Vector3(x+.35f,poleTop.position.y-.7f,z) + ScoreManager.PoleOffset;
             yield return new WaitForSeconds(bottomPause);
             p.transform.position = new Vector3(x+grabOffset,bottom,z);
             Pose(art,Frame(climb,0,idle),true,offset);
             yield return new WaitForSeconds(turnPause);
-            float stageTime = RetroAudio.BeginCastleMusic(); float musicEnd = Time.unscaledTime + stageTime;
+            float stageTime = AudioManager.BeginCastleMusic(); float musicEnd = Time.unscaledTime + stageTime;
             float ticker = 0f, elapsed = 0f;
             Vector3 start = p.transform.position;
             Vector3 landing = new Vector3(x+1.05f,ground,z);
@@ -98,7 +118,7 @@ namespace RetroPlatformer
             yield return new WaitForSecondsRealtime(Mathf.Max(0,endHold));
             session.CompleteGoal();
         }
-        void Tick(RetroSession session, ref float accumulator)
+        void Tick(GameManager session, ref float accumulator)
         {
             accumulator += Time.deltaTime * Mathf.Max(1,timeTicksPerSecond);
             int n = Mathf.FloorToInt(accumulator); if(n>0){accumulator-=n;session.ConsumeGoalTime(n);}

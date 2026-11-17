@@ -4,25 +4,41 @@ using UnityEngine;
 namespace RetroPlatformer
 {
     [DisallowMultipleComponent]
-    public class RetroAudio : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroAudio")]
+    public class AudioManager : MonoBehaviour
     {
         public enum Cue { JumpSmall, JumpSuper, Bump, BreakBlock, Coin, Stomp, Kick, PowerupAppears, Powerup, Pipe, ExtraLife, Fireball }
-        public static RetroAudio Instance { get; private set; }
-        [Header("Existing level music (assign your AudioSource here)")]
+        public static AudioManager Instance { get; private set; }
+        [Header("Level Music")]
         public AudioSource musicSource;
         public bool startMusicIfStopped = true;
         public AudioClip optionalHurryMusic;
         [Min(0)] public float warningAt = 100;
         [Range(1, 2)] public float hurryPitchMultiplier = 1.25f;
-        [Header("Separate output channels")]
+        [Header("Audio Sources and Volume")]
         public AudioSource effectsSource;
         public AudioSource jingleSource;
         [Range(0,1)] public float effectsVolume = 0.8f;
         [Range(0,1)] public float jingleVolume = 0.9f;
-        [Header("Gameplay effects")]
-        public AudioClip jumpSmall, jumpSuper, bump, breakBlock, coin, stomp, kick, powerupAppears, powerup, pipe, extraLife, fireball;
-        [Header("Music interruptions")]
-        public AudioClip warning, marioDie, gameOver, flagpole, stageClear;
+        [Header("Gameplay Effects")]
+        public AudioClip jumpSmall;
+        public AudioClip jumpSuper;
+        public AudioClip bump;
+        public AudioClip breakBlock;
+        public AudioClip coin;
+        public AudioClip stomp;
+        public AudioClip kick;
+        public AudioClip powerupAppears;
+        public AudioClip powerup;
+        public AudioClip pipe;
+        public AudioClip extraLife;
+        public AudioClip fireball;
+        [Header("Music Interruptions")]
+        public AudioClip warning;
+        public AudioClip marioDie;
+        public AudioClip gameOver;
+        public AudioClip flagpole;
+        public AudioClip stageClear;
         [Min(0)] public float afterJingleDelay = 0.15f;
         bool warned, terminal, warningChangedMusic;
         Coroutine sequence;

@@ -3,9 +3,12 @@ using UnityEngine.UI;
 
 namespace RetroPlatformer
 {
-    public class RetroHudCanvas : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroHudCanvas")]
+    public class HUD : MonoBehaviour
     {
-        public RetroSession session;
+        [Header("Game State")]
+        public GameManager session;
+        [Header("Text References")]
         public Text scoreText;
         public Text coinsLivesText;
         public Text worldText;
@@ -14,12 +17,12 @@ namespace RetroPlatformer
 
         void Reset()
         {
-            if (!session) session = FindFirstObjectByType<RetroSession>();
+            if (!session) session = FindFirstObjectByType<GameManager>();
         }
 
         void LateUpdate()
         {
-            if (!session) session = FindFirstObjectByType<RetroSession>();
+            if (!session) session = FindFirstObjectByType<GameManager>();
             if (!session) return;
 
             if (scoreText) scoreText.text = $"SCORE\n{session.Score:000000}";

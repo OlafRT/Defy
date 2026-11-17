@@ -5,24 +5,37 @@ using UnityEngine.InputSystem;
 #endif
 namespace RetroPlatformer
 {
-    [RequireComponent(typeof(RetroPlayer), typeof(RetroMarioAnimation))]
+    [RequireComponent(typeof(PlayerMovement), typeof(MarioAnimation))]
     [DisallowMultipleComponent, DefaultExecutionOrder(200)]
-    public sealed class RetroFirePower : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroFirePower")]
+    public sealed class FirePower : MonoBehaviour
     {
-        [Header("Fire Mario palettes (same order as normal poses)")]
-        public Sprite[] normal, fire, green, dark;
+        [Header("Fire Mario Palettes")]
+        public Sprite[] normal;
+        public Sprite[] fire;
+        public Sprite[] green;
+        public Sprite[] dark;
+        [Header("Attack Sprites")]
         public Sprite throwPose;
-        public Sprite[] ballFrames, burstFrames;
+        public Sprite[] ballFrames;
+        public Sprite[] burstFrames;
         [Header("Fireballs")]
         public int maxFireballs = 2;
-        public float fireballSpeed = 15f, fireballGravity = 28f, reboundSpeed = 7f;
-        public float throwPoseDuration = .12f, cooldown = .15f, flashDuration = .65f, flashFPS = 16f;
+        public float fireballSpeed = 15f;
+        public float fireballGravity = 28f;
+        public float reboundSpeed = 7f;
+        public float throwPoseDuration = .12f;
+        public float cooldown = .15f;
+        [Header("Transformation")]
+        public float flashDuration = .65f;
+        public float flashFPS = 16f;
+        [Header("Input")]
         public bool shiftAlsoShoots = true;
-        RetroPlayer player;
+        PlayerMovement player;
         bool wasFire;
         float flashUntil, throwingUntil, nextShot;
-        readonly List<RetroFireball> shots = new List<RetroFireball>();
-        void Awake() { player = GetComponent<RetroPlayer>(); }
+        readonly List<Fireball> shots = new List<Fireball>();
+        void Awake() { player = GetComponent<PlayerMovement>(); }
         void Update()
         {
             if (player.IsFire && !wasFire) { flashUntil = Time.time + flashDuration; throwingUntil = 0; }
@@ -48,10 +61,10 @@ namespace RetroPlatformer
             var go = new GameObject("Fireball"); go.transform.position = transform.position + new Vector3(dir * .23f, 1.25f, 0);
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = ballFrames[0]; sr.sortingOrder = 5;
             if (player.artwork) sr.sharedMaterial = player.artwork.sharedMaterial;
-            var shot = go.AddComponent<RetroFireball>();
+            var shot = go.AddComponent<Fireball>();
             shot.Initialize(player, sr, ballFrames, burstFrames, dir, fireballSpeed, fireballGravity, reboundSpeed);
             shots.Add(shot); nextShot = Time.time + cooldown; throwingUntil = Time.time + throwPoseDuration;
-            RetroAudio.Play(RetroAudio.Cue.Fireball);
+            AudioManager.Play(AudioManager.Cue.Fireball);
         }
         void LateUpdate()
         {
@@ -72,7 +85,7 @@ namespace RetroPlatformer
             sr.sprite = pose;
             if (sr.transform.parent == transform)
             {
-                var a = GetComponent<RetroMarioAnimation>();
+                var a = GetComponent<MarioAnimation>();
                 sr.transform.localPosition = new Vector3(a.visualOffset.x, a.visualOffset.y - pose.bounds.min.y * sr.transform.localScale.y, sr.transform.localPosition.z);
             }
         }

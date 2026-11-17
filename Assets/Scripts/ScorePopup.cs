@@ -5,11 +5,15 @@ namespace RetroPlatformer
 {
     // World-space visual only. It never changes the score.
     [DisallowMultipleComponent]
-    public sealed class RetroScorePopup : MonoBehaviour
+    [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroScorePopup")]
+    public sealed class ScorePopup : MonoBehaviour
     {
+        [Header("Text Reference")]
         public Text label;
+        [Header("Animation")]
         [Min(0.01f)] public float lifetime = .8f;
         [Min(0)] public float riseSpeed = 3.75f;
+        [Header("Pixel Snapping")]
         public bool snapToPixelGrid = true;
         [Min(1)] public int pixelsPerUnit = 16;
         Vector3 origin;
