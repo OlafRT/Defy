@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3598816396581488280, guid: b82c01c24769aa0499e1768195b818bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3492cab8eb676c04c996ff89743939e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -217,6 +217,8 @@ MonoBehaviour:
   gravity: 3.5
   fallLimit: 12
   startDirection: 1
+  upsideDown: 0
+  upperDespawnY: 50
   waitForCamera: 0
   activationMargin: 1
   artwork: {fileID: 336626185525126662}
