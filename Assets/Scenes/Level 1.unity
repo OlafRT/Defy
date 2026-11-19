@@ -2180,9 +2180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -6186,9 +6186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -7216,8 +7216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
   lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -10475,9 +10475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -13453,9 +13453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -25977,9 +25977,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -30690,6 +30690,8 @@ MonoBehaviour:
   verticalFollowStartY: 0
   followUpward: 0
   ceilingViewY: 15
+  alwaysFollowVertically: 0
+  ceilingSurfaceY: 22
 --- !u!81 &1006613900
 AudioListener:
   m_ObjectHideFlags: 0
@@ -33234,9 +33236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -38905,9 +38907,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -44795,9 +44797,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -47041,9 +47043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -47632,9 +47634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -52057,9 +52059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -52280,9 +52282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
@@ -63885,9 +63887,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6238d7747927a2c43b20732de0a86e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroQuestionAnimation
-  lightFrame: {fileID: 21300000, guid: 1d1cd4d6b18593c45ae6b5f4370dfe10, type: 3}
-  mediumFrame: {fileID: 21300000, guid: c8ea6fc46b879c54484d0319569d519a, type: 3}
-  darkFrame: {fileID: 21300000, guid: 922be7f09569cac4b81bcba94860596c, type: 3}
+  lightFrame: {fileID: 4436830033788034435, guid: e355df5cd2c22dd4ab8ef7363eca4371, type: 3}
+  mediumFrame: {fileID: 6335386455028202659, guid: 23c4fdb68ea51ed499567ce415d1a153, type: 3}
+  darkFrame: {fileID: -1820625811460470081, guid: 4e45690b079e3c84fbf218e26cb9917b, type: 3}
   lightDuration: 0.4
   transitionDuration: 0.13333334
   animate: 1
