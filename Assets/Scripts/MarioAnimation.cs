@@ -116,8 +116,9 @@ namespace RetroPlatformer
             {
                 float h = big && !player.IsCrouching ? player.bigHeight : player.smallHeight;
                 Vector3 scale = nativePixelSize ? Vector3.one : new Vector3(1f / frame.bounds.size.x, h / frame.bounds.size.y, 1f);
+                scale.y *= player.UpSign;
                 r.transform.localScale = scale;
-                r.transform.localPosition = new Vector3(visualOffset.x, visualOffset.y - frame.bounds.min.y * scale.y, r.transform.localPosition.z);
+                r.transform.localPosition = new Vector3(visualOffset.x, visualOffset.y * player.UpSign - frame.bounds.min.y * scale.y, r.transform.localPosition.z);
             }
         }
     }

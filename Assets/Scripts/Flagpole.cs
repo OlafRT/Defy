@@ -36,16 +36,18 @@ namespace RetroPlatformer
         public float timeTicksPerSecond = 60f;
         public float endHold = .35f;
         public bool showPolePoints = true;
+        [Tooltip("Only inverted Mario can activate this goal.")]
+        public bool requireInvertedGravity;
         bool used;
         void OnTriggerEnter2D(Collider2D other)
         {
             var p = other.GetComponentInParent<PlayerMovement>();
-            if (used || !p || p.IsDead || !p.ControlEnabled) return;
+            if (used || !p || p.IsDead || !p.ControlEnabled || (requireInvertedGravity && !p.IsInverted)) return;
             var session = GameManager.Instance;
             if (!session) return;
             if (!poleBottom || !poleTop || !flag || !castleDoor || !p.artwork)
             { used = true; onReached?.Invoke(); session.Finish(); return; }
-            float fraction = Mathf.InverseLerp(poleBottom.position.y, poleTop.position.y, p.transform.position.y + (p.IsBig ? 1.5f : .7f));
+            float fraction = Mathf.InverseLerp(poleBottom.position.y, poleTop.position.y, p.transform.position.y + p.UpSign * (p.IsBig ? 1.5f : .7f));
             int bonus = fraction >= .87f ? 5000 : fraction >= .67f ? 2000 : fraction >= .47f ? 800 : fraction >= .25f ? 400 : 100;
             if (!session.BeginGoal(bonus)) return;
             used = true; onReached?.Invoke(); StartCoroutine(Sequence(p, session, bonus));
@@ -57,6 +59,8 @@ namespace RetroPlatformer
             var fire = p.GetComponent<FirePower>();
             var rb = p.GetComponent<Rigidbody2D>();
             bool big = p.IsBig, fiery = p.IsFire;
+            int up = p.UpSign;
+            int travel = castleDoor.position.x < poleBottom.position.x ? -1 : 1;
             Sprite idle = anim ? (big ? anim.bigIdle : anim.smallIdle) : (big ? p.bigSprite : p.smallSprite);
             Sprite[] walk = anim ? (big ? anim.bigWalk : anim.smallWalk) : null;
             if (fiery && fire && fire.fire != null && fire.fire.Length >= 7)
@@ -69,39 +73,40 @@ namespace RetroPlatformer
             art.enabled = true; art.color = Color.white;
             Vector3 offset = anim ? (Vector3)anim.visualOffset : Vector3.zero;
             float x = poleBottom.position.x, bottom = poleBottom.position.y;
-            float ground = bottom - 1f;
+            float ground = up < 0 ? castleDoor.position.y : bottom - up;
             float z = p.transform.position.z;
-            float y = Mathf.Clamp(p.transform.position.y, bottom, Mathf.Max(bottom,poleTop.position.y - (big ? 1.8f : .9f)));
-            // Keep Mario on the left of the pole, facing it; flip to the right at the base.
-            p.transform.position = new Vector3(x - grabOffset, y, z);
+            float height = Mathf.Max(0, (poleTop.position.y - bottom) * up);
+            float y = bottom + up * Mathf.Clamp((p.transform.position.y - bottom) * up, 0, Mathf.Max(0, height - (big ? 1.8f : .9f)));
+            // Grab from the opposite side of the castle, then cross the pole at its base.
+            p.transform.position = new Vector3(x - grabOffset * travel, y, z);
             Vector3 flagStart = flag.position;
-            Vector3 flagEnd = new Vector3(flagStart.x, bottom + .50f, flagStart.z);
-            float duration = Mathf.Max(.15f, (y-bottom)/Mathf.Max(.01f,slideSpeed), (flagStart.y-flagEnd.y)/Mathf.Max(.01f,slideSpeed));
-            ScorePopup points = showPolePoints ? ScoreManager.Pole(bonus, new Vector3(x+.35f,bottom+1,z) + ScoreManager.PoleOffset, transform) : null;
+            Vector3 flagEnd = new Vector3(flagStart.x, bottom + .50f * up, flagStart.z);
+            float duration = Mathf.Max(.15f, Mathf.Abs(y-bottom)/Mathf.Max(.01f,slideSpeed), Mathf.Abs(flagStart.y-flagEnd.y)/Mathf.Max(.01f,slideSpeed));
+            ScorePopup points = showPolePoints ? ScoreManager.Pole(bonus, new Vector3(x+.35f * travel,bottom+up,z) + ScoreManager.PoleOffset, transform) : null;
             for (float t = 0; t < duration; t += Time.deltaTime)
             {
                 float f = Mathf.Clamp01(t/duration);
-                p.transform.position = new Vector3(x-grabOffset,Mathf.Lerp(y,bottom,f),z);
+                p.transform.position = new Vector3(x-grabOffset * travel,Mathf.Lerp(y,bottom,f),z);
                 flag.position = Vector3.Lerp(flagStart,flagEnd,f);
-                Pose(art, Frame(climb,t*slideFPS,idle),false,offset);
-                if (points) points.transform.position = new Vector3(x+.35f,Mathf.Lerp(bottom+1,poleTop.position.y-.7f,f),z) + ScoreManager.PoleOffset;
+                Pose(art, Frame(climb,t*slideFPS,idle),travel < 0,offset,up);
+                if (points) points.transform.position = new Vector3(x+.35f * travel,Mathf.Lerp(bottom+up,poleTop.position.y-.7f * up,f),z) + ScoreManager.PoleOffset;
                 yield return null;
             }
-            p.transform.position = new Vector3(x-grabOffset,bottom,z); flag.position = flagEnd;
-            if (points) points.transform.position = new Vector3(x+.35f,poleTop.position.y-.7f,z) + ScoreManager.PoleOffset;
+            p.transform.position = new Vector3(x-grabOffset * travel,bottom,z); flag.position = flagEnd;
+            if (points) points.transform.position = new Vector3(x+.35f * travel,poleTop.position.y-.7f * up,z) + ScoreManager.PoleOffset;
             yield return new WaitForSeconds(bottomPause);
-            p.transform.position = new Vector3(x+grabOffset,bottom,z);
-            Pose(art,Frame(climb,0,idle),true,offset);
+            p.transform.position = new Vector3(x+grabOffset * travel,bottom,z);
+            Pose(art,Frame(climb,0,idle),travel > 0,offset,up);
             yield return new WaitForSeconds(turnPause);
             float stageTime = AudioManager.BeginCastleMusic(); float musicEnd = Time.unscaledTime + stageTime;
             float ticker = 0f, elapsed = 0f;
             Vector3 start = p.transform.position;
-            Vector3 landing = new Vector3(x+1.05f,ground,z);
+            Vector3 landing = new Vector3(x+1.05f * travel,ground,z);
             float descent = Mathf.Max(.01f,descentDuration);
             for (float t=0;t<descent;t+=Time.deltaTime)
             {
                 p.transform.position = Vector3.Lerp(start,landing,t/descent);
-                Pose(art,Frame(walk,elapsed*walkFPS,idle),false,offset);
+                Pose(art,Frame(walk,elapsed*walkFPS,idle),travel < 0,offset,up);
                 Tick(session,ref ticker); elapsed+=Time.deltaTime; yield return null;
             }
             p.transform.position = landing;
@@ -109,7 +114,7 @@ namespace RetroPlatformer
             while (Vector3.Distance(p.transform.position,door)>.01f)
             {
                 p.transform.position = Vector3.MoveTowards(p.transform.position,door,Mathf.Max(.01f,walkSpeed)*Time.deltaTime);
-                Pose(art,Frame(walk,elapsed*walkFPS,idle),door.x<p.transform.position.x,offset);
+                Pose(art,Frame(walk,elapsed*walkFPS,idle),travel < 0,offset,up);
                 Tick(session,ref ticker); elapsed+=Time.deltaTime; yield return null;
             }
             p.transform.position = door; art.enabled = false;
@@ -125,11 +130,11 @@ namespace RetroPlatformer
         }
         static Sprite Frame(Sprite[] frames,float phase,Sprite fallback)
         { if(frames==null || frames.Length==0)return fallback; var s=frames[Mathf.FloorToInt(Mathf.Max(0,phase))%frames.Length];return s?s:fallback; }
-        static void Pose(SpriteRenderer r,Sprite sprite,bool flip,Vector3 offset)
+        static void Pose(SpriteRenderer r,Sprite sprite,bool flip,Vector3 offset,int up)
         {
             if(!sprite)return; r.sprite=sprite; r.flipX=flip;
-            r.transform.localScale=Vector3.one;
-            r.transform.localPosition=new Vector3(offset.x,offset.y-sprite.bounds.min.y,r.transform.localPosition.z);
+            r.transform.localScale=new Vector3(1,up,1);
+            r.transform.localPosition=new Vector3(offset.x,(offset.y-sprite.bounds.min.y)*up,r.transform.localPosition.z);
         }
     }
 }

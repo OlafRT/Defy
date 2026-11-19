@@ -8,7 +8,7 @@ namespace RetroPlatformer
     [UnityEngine.Scripting.APIUpdating.MovedFrom(false, sourceNamespace: "RetroPlatformer", sourceClassName: "RetroBlock")]
     public class Block : MonoBehaviour
     {
-        public enum Kind { Brick, Coin, Mushroom, ExtraLife, Solid }
+        public enum Kind { Brick, Coin, Mushroom, ExtraLife, Solid, GravityMushroom }
         [Header("Block Type")]
         public Kind kind;
         [Header("Sprites")]
@@ -18,6 +18,7 @@ namespace RetroPlatformer
         public Walker mushroomPrefab;
         public Walker extraLifePrefab;
         public Walker fireFlowerPrefab;
+        public Walker gravityMushroomPrefab;
         public bool upgradeMushroomToFlower = true;
         [Header("Coin Pop")]
         public Sprite coinSprite;
@@ -38,14 +39,16 @@ namespace RetroPlatformer
             busy = true; onBumped?.Invoke();
             // Kill enemies standing on top of a bumped block.
             var b = GetComponent<BoxCollider2D>().bounds;
-            foreach (var c in Physics2D.OverlapBoxAll(new Vector2(b.center.x,b.max.y + .14f),new Vector2(.9f,.35f),0))
+            int up = player.UpSign;
+            float surface = up > 0 ? b.max.y : b.min.y;
+            foreach (var c in Physics2D.OverlapBoxAll(new Vector2(b.center.x,surface + .14f * up),new Vector2(.9f,.35f),0))
             { var w = c.GetComponentInParent<Walker>(); if (w && w.kind == Walker.Kind.Enemy) w.HitFromBelow(); }
             if (kind == Kind.Brick && player.IsBig)
             {
                 if (GameManager.Instance) GameManager.Instance.AddScore(50);
-                ScoreManager.Brick(transform.position + Vector3.up * .5f);
+                ScoreManager.Brick(transform.position + Vector3.up * (.5f * up), up);
                 AudioManager.Play(AudioManager.Cue.BreakBlock);
-                onBroken?.Invoke(); Break(); return;
+                onBroken?.Invoke(); Break(up); return;
             }
             if (kind == Kind.Brick) AudioManager.Play(AudioManager.Cue.Bump);
             if (kind != Kind.Brick)
@@ -55,39 +58,41 @@ namespace RetroPlatformer
                 if (kind == Kind.Coin)
                 {
                     if (GameManager.Instance) GameManager.Instance.AddCoin();
-                    ScoreManager.BlockCoin(transform.position + Vector3.up * 1.05f, coinSprite ? .42f : 0f);
-                    PopCoin();
+                    ScoreManager.BlockCoin(transform.position + Vector3.up * (1.05f * up), coinSprite ? .42f : 0f, up);
+                    PopCoin(up);
                 }
                 else
                 {
-                    Walker prefab = kind == Kind.ExtraLife ? extraLifePrefab :
+                    Walker prefab = kind == Kind.GravityMushroom ? gravityMushroomPrefab : kind == Kind.ExtraLife ? extraLifePrefab :
                         (upgradeMushroomToFlower && player.IsBig && fireFlowerPrefab ? fireFlowerPrefab : mushroomPrefab);
                     if (prefab)
                     {
-                        var item = Instantiate(prefab, new Vector3(b.center.x, b.max.y - .45f, 0), Quaternion.identity);
-                        item.Emerge(b.max.y + .48f);
+                        var item = Instantiate(prefab, new Vector3(b.center.x, surface - .45f * up, 0), Quaternion.identity);
+                        item.SetGravity(up < 0);
+                        item.Emerge(surface + .48f * up);
                     }
                 }
             }
-            StartCoroutine(BumpAnimation());
+            StartCoroutine(BumpAnimation(up));
         }
-        IEnumerator BumpAnimation()
+        IEnumerator BumpAnimation(int up)
         {
             Transform visual = artwork && artwork.transform != transform ? artwork.transform : null;
             Vector3 start = visual ? visual.localPosition : Vector3.zero;
+            Vector3 bumpDirection = visual ? transform.InverseTransformVector(Vector3.up * up) : Vector3.zero;
             for (float t = 0; t < bumpDuration; t += Time.deltaTime)
-            { if (visual) visual.localPosition = start + Vector3.up * (Mathf.Sin(t / bumpDuration * Mathf.PI) * bumpHeight); yield return null; }
+            { if (visual) visual.localPosition = start + bumpDirection * (Mathf.Sin(t / bumpDuration * Mathf.PI) * bumpHeight); yield return null; }
             if (visual) visual.localPosition = start;
             busy = false;
         }
-        void PopCoin()
+        void PopCoin(int up)
         {
             if (!coinSprite) return;
-            var go = new GameObject("Coin pop"); go.transform.position = transform.position + Vector3.up * .6f;
+            var go = new GameObject("Coin pop"); go.transform.position = transform.position + Vector3.up * (.6f * up);
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = coinSprite; sr.sortingOrder = 3; if (artwork) sr.sharedMaterial = artwork.sharedMaterial;
-            go.AddComponent<Effect>().Launch(Vector2.up * 6f, .42f, 25f);
+            go.AddComponent<Effect>().Launch(Vector2.up * (6f * up), .42f, 25f * up);
         }
-        void Break()
+        void Break(int up)
         {
             if (artwork && artwork.sprite)
                 for (int i = 0; i < 4; i++)
@@ -95,7 +100,7 @@ namespace RetroPlatformer
                     var p = new GameObject("Brick debris"); p.transform.position = transform.position + new Vector3(i % 2 == 0 ? -.25f : .25f, i < 2 ? .25f : -.25f);
                     p.transform.localScale = Vector3.one * .42f;
                     var sr = p.AddComponent<SpriteRenderer>(); sr.sprite = artwork.sprite; sr.sortingOrder = 3; sr.sharedMaterial = artwork.sharedMaterial;
-                    p.AddComponent<Effect>().Launch(new Vector2(i % 2 == 0 ? -3 : 3, i < 2 ? 9 : 5), .7f, 28f);
+                    p.AddComponent<Effect>().Launch(new Vector2(i % 2 == 0 ? -3 : 3, (i < 2 ? 9 : 5) * up), .7f, 28f * up);
                 }
             GetComponent<BoxCollider2D>().enabled = false; Destroy(gameObject);
         }

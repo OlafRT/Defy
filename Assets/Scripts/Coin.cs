@@ -10,7 +10,7 @@ namespace RetroPlatformer
             var p = other.GetComponentInParent<PlayerMovement>();
             if (collected || !p || p.IsDead) return;
             collected = true; if (GameManager.Instance) GameManager.Instance.AddCoin();
-            ScoreManager.LooseCoin(transform.position + Vector3.up * .35f); Destroy(gameObject);
+            ScoreManager.LooseCoin(transform.position + Vector3.up * (.35f * p.UpSign), p.UpSign); Destroy(gameObject);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace RetroPlatformer
         void LateUpdate()
         {
             if (!animate || !block || block.Used) return;
-            if (block.kind != Block.Kind.Coin && block.kind != Block.Kind.Mushroom && block.kind != Block.Kind.ExtraLife) return;
+            if (block.kind != Block.Kind.Coin && block.kind != Block.Kind.Mushroom && block.kind != Block.Kind.ExtraLife && block.kind != Block.Kind.GravityMushroom) return;
             if (!block.artwork || !lightFrame || !mediumFrame || !darkFrame) return;
             // A common scene clock keeps all question blocks in sync.
             float light = Mathf.Max(.01f, lightDuration);

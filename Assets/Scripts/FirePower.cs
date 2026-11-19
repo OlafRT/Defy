@@ -58,7 +58,7 @@ namespace RetroPlatformer
             if (shots.Count >= Mathf.Max(0, maxFireballs) || ballFrames == null || ballFrames.Length == 0 || !ballFrames[0]) return;
             int dir = player.Facing;
             // Spawn on the inside of Mario's front edge; the first cast tests the entire exit path.
-            var go = new GameObject("Fireball"); go.transform.position = transform.position + new Vector3(dir * .23f, 1.25f, 0);
+            var go = new GameObject("Fireball"); go.transform.position = transform.position + new Vector3(dir * .23f, 1.25f * player.UpSign, 0);
             var sr = go.AddComponent<SpriteRenderer>(); sr.sprite = ballFrames[0]; sr.sortingOrder = 5;
             if (player.artwork) sr.sharedMaterial = player.artwork.sharedMaterial;
             var shot = go.AddComponent<Fireball>();
@@ -86,7 +86,7 @@ namespace RetroPlatformer
             if (sr.transform.parent == transform)
             {
                 var a = GetComponent<MarioAnimation>();
-                sr.transform.localPosition = new Vector3(a.visualOffset.x, a.visualOffset.y - pose.bounds.min.y * sr.transform.localScale.y, sr.transform.localPosition.z);
+                sr.transform.localPosition = new Vector3(a.visualOffset.x, a.visualOffset.y * player.UpSign - pose.bounds.min.y * sr.transform.localScale.y, sr.transform.localPosition.z);
             }
         }
         static Sprite Frame(Sprite[] arr, int index) => arr != null && index >= 0 && index < arr.Length ? arr[index] : null;

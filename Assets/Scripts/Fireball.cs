@@ -6,12 +6,12 @@ namespace RetroPlatformer
     public sealed class Fireball : MonoBehaviour
     {
         PlayerMovement owner; SpriteRenderer visual; Sprite[] flight, explosions;
-        Vector2 velocity; float gravity, bounce, elapsed, burstTime; int direction;
+        Vector2 velocity; float gravity, bounce, elapsed, burstTime; int direction, upSign;
         readonly RaycastHit2D[] hits = new RaycastHit2D[48];
         public bool Finished { get; private set; }
         const float Radius = .17f;
         public void Initialize(PlayerMovement p, SpriteRenderer sr, Sprite[] f, Sprite[] e, int dir, float speed, float g, float rebound)
-        { owner=p; visual=sr; flight=f; explosions=e; direction=dir; velocity=new Vector2(dir * speed,-3f); gravity=g; bounce=rebound; }
+        { owner=p; visual=sr; flight=f; explosions=e; direction=dir; upSign=p.UpSign; velocity=new Vector2(dir * speed,-3f * upSign); gravity=g * upSign; bounce=rebound; }
         void FixedUpdate()
         {
             if (Finished || !owner) return;
@@ -35,11 +35,17 @@ namespace RetroPlatformer
                 var hit=hits[best]; transform.position=pos+delta.normalized*Mathf.Max(0,distance-.01f);
                 var w=hit.collider.GetComponentInParent<Walker>();
                 if(w) {w.HitByFire(direction); Burst();return;}
-                if(hit.normal.y>.55f && velocity.y<0) {velocity.y=bounce; transform.position+=Vector3.up*.02f;}
+                // Marked tiles break on any impact, including a downward bounce.
+                var breakable=hit.collider.GetComponent<FireBreakable>();
+                if(breakable && breakable.isActiveAndEnabled && breakable.TryBreak())
+                {
+                    Burst(); return;
+                }
+                if(hit.normal.y * upSign>.55f && velocity.y * upSign<0) {velocity.y=bounce * upSign; transform.position+=Vector3.up*(.02f * upSign);}
                 else { Burst(); return; }
             }
             else transform.position=pos+delta;
-            var cam=Camera.main; if(transform.position.y < -5 || (cam && Mathf.Abs(transform.position.x-cam.transform.position.x)>cam.orthographicSize*cam.aspect+2)) Destroy(gameObject);
+            var cam=Camera.main; if((upSign > 0 ? transform.position.y < -5 : transform.position.y > owner.invertedDeathY + 2) || (cam && Mathf.Abs(transform.position.x-cam.transform.position.x)>cam.orthographicSize*cam.aspect+2)) Destroy(gameObject);
         }
         void Burst(){Finished=true;burstTime=0;if(explosions!=null && explosions.Length>0) visual.sprite=explosions[0];else Destroy(gameObject);}
         void Update()

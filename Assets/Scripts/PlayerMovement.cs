@@ -45,6 +45,13 @@ namespace RetroPlatformer
         [Header("Damage and Death")]
         public float invincibilityTime = 2.5f;
         public float deathY = -4f;
+        [Tooltip("Trigger boxes where Mario may safely go below Death Y. Empty on normal levels.")]
+        public BoxCollider2D[] safeDropZones = new BoxCollider2D[0];
+        [Header("Gravity Inversion")]
+        [Tooltip("Death height when falling upward. Place above the highest ceiling.")]
+        public float invertedDeathY = 40f;
+        public bool IsInverted { get; private set; }
+        public int UpSign => IsInverted ? -1 : 1;
         [Header("Camera")]
         public CameraFollow scrollingCamera;
         public bool IsBig { get; private set; }
@@ -116,25 +123,36 @@ namespace RetroPlatformer
         bool IsTerrain(Collider2D other) => other && other != box && !other.GetComponentInParent<PlayerMovement>() && !other.GetComponentInParent<Walker>() && !other.isTrigger;
         bool IsOnGround()
         {
-            int count = box.Cast(Vector2.down, Filter, hits, .055f);
-            for (int i = 0; i < count; i++) if (IsTerrain(hits[i].collider) && hits[i].normal.y > .55f) return true;
+            int count = box.Cast(Vector2.down * UpSign, Filter, hits, .055f);
+            for (int i = 0; i < count; i++) if (IsTerrain(hits[i].collider) && hits[i].normal.y * UpSign > .55f) return true;
             return false;
         }
         bool CanStand()
         {
-            Vector2 center = body.position + Vector2.up * bigHeight * .5f;
+            Vector2 center = body.position + Vector2.up * (UpSign * bigHeight * .5f);
             int count = Physics2D.OverlapBox(center, new Vector2(bodyWidth - .04f, bigHeight - .06f), 0, Filter, overlaps);
             for (int i = 0; i < count; i++) if (IsTerrain(overlaps[i])) return false;
             return true;
         }
+        public bool IsInSafeDropZone(Vector2 point)
+        {
+            if (safeDropZones == null) return false;
+            foreach (var zone in safeDropZones)
+            {
+                if (zone && zone.enabled && zone.gameObject.activeInHierarchy && zone.isTrigger && zone.OverlapPoint(point))
+                    return true;
+            }
+            return false;
+        }
+
         void FixedUpdate()
         {
             if (IsDead) return;
             float dt = Time.fixedDeltaTime;
             invincible = Mathf.Max(0, invincible - dt); fireGrace = Mathf.Max(0, fireGrace - dt);
-            if (body.position.y < deathY) { Die(); return; }
+            if ((body.position.y < deathY && !IsInSafeDropZone(body.position)) || (IsInverted && body.position.y > invertedDeathY)) { Die(); return; }
             Vector2 v = body.linearVelocity;
-            Grounded = v.y <= .1f && IsOnGround();
+            Grounded = v.y * UpSign <= .1f && IsOnGround();
             coyote = Grounded ? coyoteTime : Mathf.Max(0, coyote - dt);
             if (IsBig)
             {
@@ -147,7 +165,7 @@ namespace RetroPlatformer
                 AudioManager.Play(IsBig ? AudioManager.Cue.JumpSuper : AudioManager.Cue.JumpSmall);
                 float speed = Mathf.Abs(v.x);
                 bool fast = speed >= 5.86f, walking = speed >= 3.75f;
-                v.y = fast ? runningJumpSpeed : jumpSpeed;
+                v.y = UpSign * (fast ? runningJumpSpeed : jumpSpeed);
                 riseGravity = fast ? runningJumpGravity : walking ? walkingJumpGravity : heldGravity;
                 fallGravity = fast ? runningFallGravity : walking ? walkingFallGravity : releasedGravity;
                 Grounded = false; coyote = 0; released = !jumpHeld; headConsumed = false;
@@ -171,10 +189,10 @@ namespace RetroPlatformer
             }
             if (!Grounded && !jump)
             {
-                if (!jumpHeld || v.y <= 0) released = true;
-                v.y = Mathf.Max(-maxFallSpeed, v.y - (released ? fallGravity : riseGravity) * dt);
+                if (!jumpHeld || v.y * UpSign <= 0) released = true;
+                v.y = UpSign * Mathf.Max(-maxFallSpeed, v.y * UpSign - (released ? fallGravity : riseGravity) * dt);
             }
-            else if (Grounded) { v.y = -.15f; released = true; headConsumed = false; }
+            else if (Grounded) { v.y = -.15f * UpSign; released = true; headConsumed = false; }
             if (scrollingCamera && scrollingCamera.oneWay)
             {
                 float min = scrollingCamera.LeftEdge + bodyWidth * .5f;
@@ -191,27 +209,40 @@ namespace RetroPlatformer
             if (IsDead) return;
             var block = collision.collider.GetComponentInParent<Block>();
             var walker = collision.collider.GetComponentInParent<Walker>();
-            if (block && preY > 0 && !headConsumed)
+            if (block && preY * UpSign > 0 && !headConsumed)
             {
                 foreach (var c in collision.contacts)
-                    if (c.normal.y < -.5f) { headConsumed = true; released = true; body.linearVelocity = new Vector2(body.linearVelocity.x, -.5f); block.Bump(this); break; }
+                    if (c.normal.y * UpSign < -.5f) { headConsumed = true; released = true; body.linearVelocity = new Vector2(body.linearVelocity.x, -.5f * UpSign); block.Bump(this); break; }
             }
-            if (!block && !walker && preY > 0 && !headConsumed && IsTerrain(collision.collider))
+            if (!block && !walker && preY * UpSign > 0 && !headConsumed && IsTerrain(collision.collider))
             {
                 foreach (var c in collision.contacts)
-                    if (c.normal.y < -.5f) { headConsumed = true; AudioManager.Play(AudioManager.Cue.Bump); break; }
+                    if (c.normal.y * UpSign < -.5f) { headConsumed = true; AudioManager.Play(AudioManager.Cue.Bump); break; }
             }
             if (walker && walker.Active)
             {
                 if (walker.kind != Walker.Kind.Enemy) { walker.Collect(this); return; }
                 bool above = false;
-                foreach (var c in collision.contacts) if (c.normal.y > .45f) above = true;
-                if (above && preY < -.1f && box.bounds.min.y >= walker.transform.position.y - .08f)
+                foreach (var c in collision.contacts) if (c.normal.y * UpSign > .45f) above = true;
+                if (above && preY * UpSign < -.1f && (UpSign > 0 ? box.bounds.min.y >= walker.transform.position.y - .08f : box.bounds.max.y <= walker.transform.position.y + .08f))
                 { walker.Stomp(); Bounce(); }
                 else Hurt();
             }
         }
-        public void Bounce() { released = true; headConsumed = false; body.linearVelocity = new Vector2(body.linearVelocity.x, stompBounce); }
+        public void Bounce() { released = true; headConsumed = false; body.linearVelocity = new Vector2(body.linearVelocity.x, stompBounce * UpSign); }
+        public void InvertGravity()
+        {
+            if (IsDead || IsInverted || !ControlEnabled) return;
+            // Move the feet to the old head position so the mirrored collider occupies the same space.
+            float height = box.size.y;
+            body.position += Vector2.up * height;
+            transform.position = new Vector3(body.position.x, body.position.y, transform.position.z);
+            IsInverted = true; Grounded = false; coyote = 0; jumpQueued = false;
+            released = true; headConsumed = false;
+            riseGravity = heldGravity; fallGravity = initialFallGravity;
+            body.linearVelocity = new Vector2(body.linearVelocity.x, 0);
+            ApplySize();
+        }
         public void Grow()
         {
             if (IsDead || IsBig) return;
@@ -230,7 +261,7 @@ namespace RetroPlatformer
         void CollectFlower(Collider2D other)
         {
             var item = other.GetComponentInParent<Walker>();
-            if (item && item.kind == Walker.Kind.Flower) item.Collect(this);
+            if (item && (item.kind == Walker.Kind.Flower || item.kind == Walker.Kind.GravityMushroom)) item.Collect(this);
         }
         public void Hurt()
         {
@@ -243,7 +274,7 @@ namespace RetroPlatformer
             if (IsDead || (GameManager.Instance && GameManager.Instance.Finished)) return;
             IsFire = false; IsDead = true; ControlEnabled = false; box.enabled = false;
             if (artwork) artwork.enabled = true;
-            body.gravityScale = 3; body.linearVelocity = new Vector2(0, 10);
+            body.gravityScale = 3 * UpSign; body.linearVelocity = new Vector2(0, 10 * UpSign);
             Died?.Invoke();
             if (GameManager.Instance) GameManager.Instance.RestartAfterDeath();
             else AudioManager.Death(false);
@@ -251,13 +282,13 @@ namespace RetroPlatformer
         void ApplySize()
         {
             float h = IsBig && !IsCrouching ? bigHeight : smallHeight;
-            box.size = new Vector2(bodyWidth, h); box.offset = new Vector2(0, h * .5f);
+            box.size = new Vector2(bodyWidth, h); box.offset = new Vector2(0, h * .5f * UpSign);
             if (!artwork) return;
             Sprite sprite = IsBig ? (IsCrouching && crouchSprite ? crouchSprite : bigSprite) : smallSprite;
             if (sprite) artwork.sprite = sprite;
-            if (artwork.transform != transform) artwork.transform.localPosition = Vector3.up * h * .5f;
+            if (artwork.transform != transform) artwork.transform.localPosition = Vector3.up * (h * .5f * UpSign);
             if (artwork.sprite && artwork.transform != transform)
-                artwork.transform.localScale = new Vector3(1f / artwork.sprite.bounds.size.x, h / artwork.sprite.bounds.size.y, 1);
+                artwork.transform.localScale = new Vector3(1f / artwork.sprite.bounds.size.x, h / artwork.sprite.bounds.size.y * UpSign, 1);
         }
     }
 }
