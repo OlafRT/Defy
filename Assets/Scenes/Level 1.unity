@@ -56620,7 +56620,7 @@ MonoBehaviour:
   coyoteTime: 0
   jumpBuffer: 0
   artwork: {fileID: 2045054481}
-  smallSprite: {fileID: 21300000, guid: 1217a75683def9948a60172fa170a31b, type: 3}
+  smallSprite: {fileID: -6252209948196140643, guid: b311ef51949c9d245bae40dcf2248dc6, type: 3}
   bigSprite: {fileID: 21300000, guid: 7361889babb73134fb12d69bd3e4782e, type: 3}
   crouchSprite: {fileID: 21300000, guid: 57f98fa9b68190b4180db5af2040d1cd, type: 3}
   bodyWidth: 0.72
@@ -56735,15 +56735,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98187cca5dd3a44c89da267e74f8404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RetroPlatformer.RetroMarioAnimation
-  smallIdle: {fileID: 21300000, guid: 1217a75683def9948a60172fa170a31b, type: 3}
-  smallJump: {fileID: 21300000, guid: 4b3be6a4618b3194b9a10daf4877d223, type: 3}
-  smallSkid: {fileID: 21300000, guid: d5774af69317f034c9c9021caa70f903, type: 3}
-  smallDeath: {fileID: 21300000, guid: 39b5a0c871a5d3147a51a17cddbabbca, type: 3}
+  smallIdle: {fileID: -6252209948196140643, guid: b311ef51949c9d245bae40dcf2248dc6, type: 3}
+  smallJump: {fileID: 1613980237093221346, guid: 5277dfdfd2d84c14da92ef3022faaa1c, type: 3}
+  smallSkid: {fileID: 6726608181618811202, guid: 0305dd6e6e02c2d4ea58d07cba80963f, type: 3}
+  smallDeath: {fileID: 8491750733348548782, guid: 16b66b189d02f114f9aa174305b5817f, type: 3}
   smallWalk:
-  - {fileID: 21300000, guid: c75f5bc2bee25f842a2fb28e357019ac, type: 3}
-  - {fileID: 21300000, guid: 636dad074ae1fa6499029a05eb4c856d, type: 3}
-  - {fileID: 21300000, guid: 388004f76328fbf438f2033e91fd3ba7, type: 3}
-  bigIdle: {fileID: 21300000, guid: 7361889babb73134fb12d69bd3e4782e, type: 3}
+  - {fileID: -2612864455124819932, guid: bc8b450d8db4ab341b9b9f9bff387b42, type: 3}
+  - {fileID: 6935917129777575428, guid: e48413db16b4b354a92e06ce03fdd3ae, type: 3}
+  - {fileID: -875541258009965189, guid: 20c9f715f4b37e1438af95a5d2bbb608, type: 3}
+  - {fileID: -9031939082408350143, guid: b16912fc99187d840a046c21e7831f0e, type: 3}
+  - {fileID: 624713372631445958, guid: 6269201033acaf947bc8fbfb39d2d767, type: 3}
+  bigIdle: {fileID: 2043055525233186004, guid: 4558c941bb5067a40985bcfc450ffa75, type: 3}
   bigJump: {fileID: 21300000, guid: cacd25bb0d091b347845f307d5ede3ce, type: 3}
   bigSkid: {fileID: 21300000, guid: 025b608f75127c946a16f88c7ad64bf1, type: 3}
   bigCrouch: {fileID: 21300000, guid: 57f98fa9b68190b4180db5af2040d1cd, type: 3}
@@ -68073,7 +68075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1217a75683def9948a60172fa170a31b, type: 3}
+  m_Sprite: {fileID: -6252209948196140643, guid: b311ef51949c9d245bae40dcf2248dc6, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -69013,7 +69015,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'MARIO
+  m_Text: 'SEAN
 
     00000'
 --- !u!224 &722815121793250382
