@@ -39347,7 +39347,7 @@ MonoBehaviour:
   introLives: {fileID: 0}
   showVictory: 1
   victoryTitle: YOU WIN!!
-  credits: "Made by:\nOlaf R. Tevasvold\nStanis\u0142aw Zawada\nArnav\nMinu?"
+  credits: "Programming:   \nOlaf R. Tevasvold\n\nArt:   \nJamie Braad Sernbo, \nMustafa Ali Toglukdemir\n\nLevel Design:   \nStanislaw Bruno Zawada, \nArnav Singh Negi, \nOlaf R. Tevasvold"
   restartScene: Level 1
   showCursorOnVictory: 1
   victoryCanvas: {fileID: 1732531108}
@@ -42620,10 +42620,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: d446db296b3603e489fa6f575a301ae5, type: 3}
-    m_FontSize: 8
+    m_FontSize: 6
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 8
+    m_MinSize: 4
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -42631,7 +42631,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "Programming:   \nOlaf R. Tevasvold\n\nArt:   \nJamie Braad Sernbo, \nMustafa Ali Toglukdemir\n\nLevel Design:   \nStanislaw Bruno Zawada, \nArnav Singh Negi, \nOlaf R. Tevasvold"
 --- !u!222 &1359277215
 CanvasRenderer:
   m_ObjectHideFlags: 0
